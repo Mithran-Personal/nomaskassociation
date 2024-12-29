@@ -393,28 +393,27 @@
         });
 
 const musicFab = document.querySelector('.music-fab');
-let isPlaying = true;
 
 // Initialize audio and enable looping
 const music = new Audio('music.mp3');
 music.loop = true;
-music.play();
 
-// Update the FAB icon to "pause" on autoplay
+// Automatically start playing the music
+music.play().catch(() => {
+  console.log("Autoplay failed. User interaction may be required."); // Handles autoplay restrictions in some browsers
+});
+
+// Set up the FAB for icon toggling
 const icon = musicFab.querySelector('i');
-icon.className = 'bi bi-pause-fill';
+let isPlaying = true; // Default state: music is playing
+icon.className = 'bi bi-pause-fill'; // Default FAB icon to "pause"
 
-// Toggle music playback on FAB click
+// Toggle FAB icon when clicked (does not control music)
 musicFab.addEventListener('click', () => {
   isPlaying = !isPlaying;
   icon.className = isPlaying ? 'bi bi-pause-fill' : 'bi bi-play-fill';
-
-  if (isPlaying) {
-    music.play();
-  } else {
-    music.pause();
-  }
 });
+
 
         const indicators = document.querySelectorAll('.carousel-indicators span');
         const items = document.querySelectorAll('.carousel-item');
