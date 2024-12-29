@@ -393,25 +393,43 @@
         });
 
 const musicFab = document.querySelector('.music-fab');
-let isPlaying = true;
+let isPlaying = false;  // Changed to false since we assume music isn't playing at start
 const music = new Audio('music.mp3');
 
-// Play music automatically when the page loads
-music.play().catch(error => {
-  console.error("Autoplay was prevented:", error);
-});
+// Function to attempt playing music
+const tryPlay = () => {
+  music.play().then(() => {
+    // If play() was successful, update the state
+    isPlaying = true;
+    icon.className = 'bi bi-pause-fill';
+  }).catch(error => {
+    // If play() was blocked, log the error and set up to play on user interaction
+    console.error("Autoplay was prevented:", error);
+    musicFab.addEventListener('click', handleFirstInteraction, { once: true });
+  });
+};
+
+// Attempt to play music when the script loads
+tryPlay();
 
 const icon = musicFab.querySelector('i');
-icon.className = 'bi bi-pause-fill';
+icon.className = 'bi bi-play-fill';  // Start with play icon since music isn't playing
+
+function handleFirstInteraction() {
+  tryPlay();
+}
 
 musicFab.addEventListener('click', () => {
-  isPlaying = !isPlaying;
-  icon.className = isPlaying ? 'bi bi-pause-fill' : 'bi bi-play-fill';
-
   if (isPlaying) {
-    music.play();
-  } else {
     music.pause();
+    isPlaying = false;
+    icon.className = 'bi bi-play-fill';
+  } else {
+    music.play().catch(error => {
+      console.error("Error playing music:", error);
+    });
+    isPlaying = true;
+    icon.className = 'bi bi-pause-fill';
   }
 });
 
