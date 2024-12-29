@@ -393,33 +393,15 @@
         });
 
 const musicFab = document.querySelector('.music-fab');
-let isPlaying = false;  // Changed to false since we assume music isn't playing at start
 const music = new Audio('music.mp3');
+let isPlaying = false;
 
-// Function to attempt playing music
-const tryPlay = () => {
-  music.play().then(() => {
-    // If play() was successful, update the state
-    isPlaying = true;
-    icon.className = 'bi bi-pause-fill';
-  }).catch(error => {
-    // If play() was blocked, log the error and set up to play on user interaction
-    console.error("Autoplay was prevented:", error);
-    musicFab.addEventListener('click', handleFirstInteraction, { once: true });
-  });
-};
-
-// Attempt to play music when the script loads
-tryPlay();
-
+// Set up icon for initial state (music not playing)
 const icon = musicFab.querySelector('i');
-icon.className = 'bi bi-play-fill';  // Start with play icon since music isn't playing
+icon.className = 'bi bi-play-fill';
 
-function handleFirstInteraction() {
-  tryPlay();
-}
-
-musicFab.addEventListener('click', () => {
+// Function to handle music playback
+function togglePlayback() {
   if (isPlaying) {
     music.pause();
     isPlaying = false;
@@ -431,8 +413,20 @@ musicFab.addEventListener('click', () => {
     isPlaying = true;
     icon.className = 'bi bi-pause-fill';
   }
+}
+
+// Attempt to play music automatically on page load
+music.play().then(() => {
+  isPlaying = true;
+  icon.className = 'bi bi-pause-fill';
+}).catch(error => {
+  // If autoplay fails, log error and wait for user interaction
+  console.error("Autoplay was prevented:", error);
+  musicFab.addEventListener('click', togglePlayback, { once: true });
 });
 
+// Event listener for music control after initial state or interaction
+musicFab.addEventListener('click', togglePlayback);
         const indicators = document.querySelectorAll('.carousel-indicators span');
         const items = document.querySelectorAll('.carousel-item');
         indicators.forEach((indicator, index) => {
