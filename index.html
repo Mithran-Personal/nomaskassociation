@@ -393,29 +393,27 @@
         });
 
 const musicFab = document.querySelector('.music-fab');
+let isPlaying = true;
 const music = new Audio('music.mp3');
 
-// Enable looping and autoplay
-music.loop = true;
-
-// Start playing the music automatically
-music.play().catch(() => {
-  console.warn("Autoplay blocked by browser. Waiting for user interaction.");
+// Play music automatically when the page loads
+music.play().catch(error => {
+  console.error("Autoplay was prevented:", error);
 });
 
-// FAB to control play/pause
+const icon = musicFab.querySelector('i');
+icon.className = 'bi bi-pause-fill';
+
 musicFab.addEventListener('click', () => {
-  if (music.paused) {
-    music.play().catch(() => {
-      console.error("Music play failed. Check file path or browser settings.");
-    });
-    musicFab.querySelector('i').className = 'bi bi-pause-fill';
+  isPlaying = !isPlaying;
+  icon.className = isPlaying ? 'bi bi-pause-fill' : 'bi bi-play-fill';
+
+  if (isPlaying) {
+    music.play();
   } else {
     music.pause();
-    musicFab.querySelector('i').className = 'bi bi-play-fill';
   }
 });
-
 
         const indicators = document.querySelectorAll('.carousel-indicators span');
         const items = document.querySelectorAll('.carousel-item');
