@@ -392,12 +392,13 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
+const music = new Audio('music.mp3');
+music.play();
+
 const musicFab = document.querySelector('.music-fab');
 let isPlaying = true;
-const music = new Audio('music.mp3');
 const icon = musicFab.querySelector('i');
 icon.className = 'bi bi-pause-fill';
-music.play();
 
 musicFab.addEventListener('click', () => {
   isPlaying = !isPlaying;
