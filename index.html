@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No Mask Association </title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Raleway:wght@300;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', sans-serif;
+            background-color: #1d1f27;
+            color: #f5f5f5;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        header {
+            background-color: rgba(40, 44, 52, 0.9);
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-family: 'Raleway', sans-serif;
+            color: #ff4d4d;
+            position: sticky;
+            top: 0;
+            transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav .menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        nav .menu li {
+            margin: 0 10px;
+            position: relative;
+        }
+        nav .menu li a {
+            color: #ff4d4d;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav .menu li a:hover {
+            color: #ff1a1a;
+        }
+        nav .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        nav .dropdown-content {
+            display: none;
+            position: absolute;
+            left: 0;
+            padding: 10px;
+            border: 1px solid white;
+            border-radius: 5px;
+            background-color: rgba(40, 44, 52, 0.9);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        nav .dropdown-content a {
+            color: #ff4d4d;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            position: left;
+        }
+        nav .dropdown-content a:hover {
+            background-color: rgba(32, 35, 42, 0.9);
+        }
+        nav .dropdown:hover .dropdown-content {
+            display: block;
+            backdrop-filter: blur(10px);
+        }
+        .dropdown-icon {
+            transition: transform 0.3s;
+        }
+        .dropdown:hover .dropdown-icon {
+            transform: rotate(180deg);
+        }
+        .container {
+            padding: 20px;
+            text-align: center;
+        }
+        .title {
+            font-size: 36px;
+            margin-bottom: 20px;
+            font-family: 'Raleway', sans-serif;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .subtitle {
+            font-size: 24px;
+            margin-bottom: 40px;
+            color: #888;
+            animation: fadeIn 2s ease-in-out 0.5s;
+        }
+        .btn {
+            background-color: #ff4d4d;
+            color: #282c34;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+            animation: fadeIn 2s ease-in-out 1s;
+            position: relative;
+        }
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50px;
+            box-shadow: 0 0 20px rgba(255, 77, 77, 0.6);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .btn-glow:hover::after {
+            opacity: 1;
+        }
+        .feature {
+            padding: 50px 0;
+            position: relative;
+            text-align: center;
+        }
+        .carousel {
+            position: relative;
+            width: 80%;
+            margin: 0 auto;
+        }
+        .carousel-item {
+            display: none;
+            text-align: center;
+            background-color: rgba(44, 48, 56, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px;
+            transition: transform 0.3s, background-color 0.3s, backdrop-filter 0.3s;
+            backdrop-filter: blur(10px);
+            animation: slideIn 1s ease-in-out;
+        }
+        .carousel-item.active {
+            display: block;
+        }
+        .carousel-item:hover {
+            background-color: rgba(58, 63, 71, 0.9);
+            transform: translateY(-5px);
+            backdrop-filter: blur(20px);
+        }
+        .carousel-indicators {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .carousel-indicators span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0 5px;
+            background-color: #888;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .carousel-indicators span.active {
+            background-color: #ff4d4d;
+        }
+        .feature-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-family: 'Raleway', sans-serif;
+        }
+        .feature-description {
+            font-size: 16px;
+        }
+        .developer {
+            padding: 50px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .developer-item {
+            background-color: rgba(44, 48, 56, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px;
+            flex-basis: 300px;
+            transition: transform 0.3s, background-color 0.3s, backdrop-filter 0.3s;
+            backdrop-filter: blur(10px);
+            animation: slideIn 1s ease-in-out;
+            border: 2px solid transparent;
+        }
+        .developer-item:hover {
+            background-color: rgba(58, 63, 71, 0.9);
+            transform: translateY(-10px);
+            backdrop-filter: blur(20px);
+            border: 2px solid red;
+            box-shadow: 0 0 2px red;
+        }
+        footer {
+            background-color: rgba(40, 44, 52, 0.9);
+            color: #ff4d4d;
+            text-align: center;
+            padding: 20px;
+            font-family: 'Raleway', sans-serif;
+            backdrop-filter: blur(10px);
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #ff4d4d, transparent);
+            animation: hrAnimation 2s linear infinite;
+        }
+        @keyframes hrAnimation {
+            0% { background-position: 0% 0; }
+            100% { background-position: 100% 0; }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes slideIn {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: linear-gradient(to right, #ff4d4d, #ff1a1a);
+            z-index: 1001;
+            transition: width 0.1s;
+        }
+        .fab {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #ff4d4d;
+            color: white;
+            position: fixed;
+            right: 20px;
+        }
+        .fab i {
+            font-size: 24px;
+        }
+        .music-fab {
+            bottom: 90px;
+            z-index: 1001;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+        }
+        .music-fab:hover {
+            background-color: #ff1a1a;
+            transform: translateY(-5px);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .scroll-up-fab {
+            bottom: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+        }
+        .scroll-up-fab:hover {
+            background-color: #ff1a1a;
+            transform: translateY(-5px);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        @media (max-width: 600px) {
+            nav .menu {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav .menu li {
+                margin: 10px 0;
+            }
+            nav .dropdown-content {
+                right: 0;
+                left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="menu">
+                <ul class="menu">
+                    <li><a href="#home">No Mask Association </a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">More <i class="dropdown-icon bi bi-chevron-down"></i></a>
+                        <div class="dropdown-content">
+                            <a href="#contact">Contact</a>
+                            <a href="#about">About</a>
+                            <a href="#features">Features</a>
+                            <a href="#features">Features</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="progress-bar"></div>
+    <div class="container" id="home">
+        <h1 class="title">Welcome to <br> No Mask Association </h1>
+        <p class="subtitle">The most anonymous group "rule the world"</p>
+        <button class="btn btn-glow">Join The "WORLD"</button>
+    </div>
+    <div class="feature" id="features">
+        <h2 class="feature-title">Our Aim</h2>
+        <div class="carousel">
+            <div class="carousel-item active">
+                <i class="bi bi-speedometer2" style="font-size: 40px;"></i>
+                <h3 class="feature-title">Dedicated Operations</h3>
+                <p class="feature-description">Hire Hitman,Buy Guns,Buy Counterfeit Tickets,Join our game!</p>
+            </div>
+            <div class="carousel-item">
+                <i class="bi bi-shield-lock" style="font-size: 40px;"></i>
+                <h3 class="feature-title">Company Slogan</h3>
+                <p class="feature-description">Follow money. Not B*tches.</p>
+            </div>
+            <div class="carousel-item">
+                <i class="bi bi-brush" style="font-size: 40px;"></i>
+                <h3 class="feature-title">ALERT</h3>
+                <p class="feature-description">If you enter our group there's no exit or going back.</p>
+            </div>
+        </div>
+        <div class="carousel-indicators">
+            <span class="active"></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <div class="developer" id="developers">
+        <div class="developer-item">
+            <i class="bi bi-code-slash" style="font-size: 40px;"></i>
+            <h3 class="feature-title">@flameX29</h3>
+            <p class="feature-description">Founder/CEO</p>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 No Mask Association . All Rights Reserved.</p>
+        <hr>
+        <p>Contact us: contact@No Mask Association .com</p>
+    </footer>
+    <div class="fab music-fab" style="right: 20px;">
+        <i class="bi bi-play-fill"></i>
+    </div>
+    <div class="fab scroll-up-fab">
+        <i class="bi bi-chevron-up"></i>
+    </div>
+    <script>
+        const progressBar = document.querySelector('.progress-bar');
+        window.addEventListener('scroll', () => {
+            const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollProgress = (window.scrollY / scrollTotal) * 100;
+            progressBar.style.width = `${scrollProgress}%`;
+
+            const scrollUpFab = document.querySelector('.scroll-up-fab');
+            if (window.scrollY > 200) {
+                scrollUpFab.style.display = 'flex';
+            } else {
+                scrollUpFab.style.display = 'none';
+            }
+        });
+
+        const scrollUpFab = document.querySelector('.scroll-up-fab');
+        scrollUpFab.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+const musicFab = document.querySelector('.music-fab');
+let isPlaying = true;
+
+// Initialize audio and enable looping
+const music = new Audio('music.mp3');
+music.loop = true;
+music.play();
+
+// Update the FAB icon to "pause" on autoplay
+const icon = musicFab.querySelector('i');
+icon.className = 'bi bi-pause-fill';
+
+// Toggle music playback on FAB click
+musicFab.addEventListener('click', () => {
+  isPlaying = !isPlaying;
+  icon.className = isPlaying ? 'bi bi-pause-fill' : 'bi bi-play-fill';
+
+  if (isPlaying) {
+    music.play();
+  } else {
+    music.pause();
+  }
+});
+
+        const indicators = document.querySelectorAll('.carousel-indicators span');
+        const items = document.querySelectorAll('.carousel-item');
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                indicators.forEach(ind => ind.classList.remove('active'));
+                items.forEach(item => item.classList.remove('active'));
+                indicator.classList.add('active');
+                items[index].classList.add('active');
+            });
+        });
+
+        const dropdown = document.querySelector('.dropdown');
+        const dropdownContent = document.querySelector('.dropdown-content');
+        window.addEventListener('resize', () => {
+            const rect = dropdownContent.getBoundingClientRect();
+            if (rect.right > window.innerWidth) {
+                dropdownContent.style.left = `-${rect.width - dropdown.getBoundingClientRect().width}px`;
+            } else {
+                dropdownContent.style.left = '0';
+            }
+        });
+    </script>
+</body>
+</html>
