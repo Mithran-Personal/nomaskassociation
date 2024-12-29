@@ -393,12 +393,15 @@
         });
 
 const musicFab = document.querySelector('.music-fab');
-let isPlaying = false;
+let isPlaying = true;
 const music = new Audio('music.mp3');
+music.play();
+
+const icon = musicFab.querySelector('i');
+icon.className = 'bi bi-pause-fill';
 
 musicFab.addEventListener('click', () => {
   isPlaying = !isPlaying;
-  const icon = musicFab.querySelector('i');
   icon.className = isPlaying ? 'bi bi-pause-fill' : 'bi bi-play-fill';
 
   if (isPlaying) {
